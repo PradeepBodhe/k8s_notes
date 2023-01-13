@@ -1,0 +1,50 @@
+There are 3 types of namespaces get created by default whenever k8s cluster setup done.
+
+- default
+- kube-system
+- kube-public
+
+
+How to create namespace. There are 2 ways.
+
+1. cat namespace-dev.yaml
+   apiVersion: v1
+   kind: Namespace
+   metadata:
+    name: dev
+
+  kubectl create -f namespace-dev.yaml
+
+  
+2. Command-line to create namespace:
+   kubectl create namespace dev
+   
+   
+Switch to another namespace:-
+kubectl config set-context $(kubectl config current-context) --namespace=dev
+
+once above command set and you want to view pod from prod and default namespaces then we have to run below commands to view pods from those namespaces:-
+kubectl get pods --namespace=prod
+kubectl get pods --namespace=default
+
+
+To view all pods from all namespaces:-
+kubectl get pods --all-namespaces
+
+
+Create resource quota yaml file for a particular namespace:-
+
+apiVersion: v1
+kind: ResourceQuota
+metadata:
+  name: compute-quota
+  namespace: dev
+spec:
+  hard:
+    pods: "10"
+    requests.cpu: "4"
+    reuests.memory: 5Gi
+    limits.cpu: "10"
+    limits.memory: 10Gi
+  
+ 
