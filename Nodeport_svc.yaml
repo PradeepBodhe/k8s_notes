@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: myapp-svc
 spec:
-  type: NodePort
+  type: NodePort 
   Ports:
    - targetPort: 80
      port: 80
