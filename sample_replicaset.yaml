@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: ReplicaSet
+metadata:
+  name: my-replicaset
+  labels:
+    run: my-app
+    type: frontend
+spec:
+  template:
+    metadata:
+      name: my-pod
+      labels:
+        run: app
+        type: frontend
+    spec:
+      containers:
+      - name: my-app
+        image: nginx
+  replicas: 3
+  selector:
+    matchLabels:
+      type: frontend
