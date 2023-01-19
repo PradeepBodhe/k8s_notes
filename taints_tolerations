@@ -1,0 +1,31 @@
+How to create taint on k8s worker node?
+kubectl taint nodes node-name key=value:taint-effect
+Sample command: kubectl taint nodes node01 app=blue:NoSchedule
+
+What happens to pods that do not tolerate this taint?
+There are 3 types of taint-effects which is given below-
+NoSchedule:- Pods will not get schedule on nodes
+PreferNoSchedule:- System will try to avoid schedule pod on node but it is not guaranteed 
+NoExecute:- New pods will not be schedule on the pod and the existing pods if there is any on node then it will get evicted if they do not tolerate the taint
+
+
+Pod Definition file with tolerations added-
+
+apiVersion: v1
+kind: Pod
+metadata:
+  name: my-pod
+  labels:
+    run: app
+    type: frontend
+spec:
+  containers:
+  - name: my-app
+    image: nginx
+  tolerations:
+  - key: "app"
+    operator: "Equal"
+    value: "blue"
+    effect: "NoSchedule"
+    
+    Pods can get deployed on any of the nodes from k8s cluster even if the pods contains the matching tolration of node taints, it is just limiing the pod not to deploy on worker node where we have added the taint's. 
