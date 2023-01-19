@@ -1,0 +1,27 @@
+How to find the no. of the pods with the lables of "bu=finance"?
+
+controlplane ~ ➜  kubectl get pods --selector='bu=finance';
+NAME          READY   STATUS    RESTARTS   AGE
+app-1-9nhtg   1/1     Running   0          3m50s
+app-1-zzxdf   1/1     Running   0          3m49s
+auth          1/1     Running   0          3m49s
+app-1-wbhj2   1/1     Running   0          3m50s
+app-1-djvjv   1/1     Running   0          3m50s
+db-2-tpmx9    1/1     Running   0          3m49s
+
+
+How to find all the objects which includes replicasets, service and pods with label 'env=prod'?
+
+controlplane ~ ➜  kubectl get pods --selector='env=prod'
+NAME          READY   STATUS    RESTARTS   AGE
+app-1-zzxdf   1/1     Running   0          6m56s
+app-2-tmzr9   1/1     Running   0          6m57s
+auth          1/1     Running   0          6m56s
+db-2-tpmx9    1/1     Running   0          6m56s
+
+
+Identify the POD which is part of the prod environment, the finance BU and of frontend tier?
+
+controlplane ~ ➜  kubectl get pods --selector='env=prod,bu=finance,tier=frontend'
+NAME          READY   STATUS    RESTARTS   AGE
+app-1-zzxdf   1/1     Running   0          10m
